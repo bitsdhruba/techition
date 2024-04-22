@@ -1,6 +1,15 @@
+import { useContext } from "react";
 import { Link } from "react-router-dom";
+import { AppContext } from "../../context/AppContext";
+import toast from "react-hot-toast";
 
 const Navbar = () => {
+  const { loggedin, setLoggedin } = useContext(AppContext);
+  const handleSignout = () => {
+    setLoggedin(false);
+    toast.error("Signed out!");
+  };
+
   return (
     <div className="max-w-full bg-[#1D3557]">
       <div className="flex justify-between items-center max-w-[1200px] h-16 mx-auto">
@@ -20,18 +29,36 @@ const Navbar = () => {
           </ul>
         </nav>
 
-        <div className="flex items-center gap-x-4 text-richblack-900 mx-3">
-          <Link to="/Login">
-            <button className="  text-white p-2 rounded-[8px] border border-richblue-700">
-              Login
-            </button>
-          </Link>
-          <Link to="/Signup">
-            <button className=" text-white bg-[#E63946] p-2 rounded-[8px] border border-richblue-700">
-              Signup
-            </button>
-          </Link>
-        </div>
+        {loggedin ? (
+          <div className="flex items-center gap-x-4 text-richblack-900 mx-3">
+            <Link to="/dashboard">
+              <button className="  text-white p-2 rounded-[8px] border border-richblue-700">
+                Dashboard
+              </button>
+            </Link>
+            <Link to="/signin">
+              <button
+                className=" text-white bg-[#E63946] p-2 rounded-[8px] border border-richblue-700"
+                onClick={handleSignout}
+              >
+                Sign out
+              </button>
+            </Link>
+          </div>
+        ) : (
+          <div className="flex items-center gap-x-4 text-richblack-900 mx-3">
+            <Link to="/signin">
+              <button className="  text-white p-2 rounded-[8px] border border-richblue-700">
+                Login
+              </button>
+            </Link>
+            <Link to="/signup">
+              <button className=" text-white bg-[#E63946] p-2 rounded-[8px] border border-richblue-700">
+                Signup
+              </button>
+            </Link>
+          </div>
+        )}
       </div>
     </div>
   );
