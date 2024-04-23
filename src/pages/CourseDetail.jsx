@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import { AppContext } from "../context/AppContext";
 import Loader from "../components/loader/Loader";
 import SingleCourse from "../components/courses/SingleCourse";
+import Navigation from "../components/Navigation";
 
 const CourseDetail = () => {
   const { courses, load } = useContext(AppContext);
@@ -28,10 +29,9 @@ const CourseDetail = () => {
     .filter((course) => course.id === courseId)
     .at(-1);
 
-  console.log(filteredCourse);
-
   return (
-    <div>
+    <div className="max-w-[1200px] mx-auto p-4 h-fit">
+      <Navigation />
       {load ? <Loader /> : <SingleCourse filteredCourse={filteredCourse} />}
     </div>
   );
